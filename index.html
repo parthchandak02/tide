@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>tide — ocean surface</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    html,body{width:100%;height:100%;overflow:hidden;background:#0a0e17}
+    canvas{display:block;touch-action:manipulation}
+    :root{--motion-fast:160ms;--motion-base:240ms;--motion-slow:360ms;--ease-out-expo:cubic-bezier(0.22,1,0.36,1)}
+  </style>
+</head>
+<body>
+  <div id="hero"></div>
+  <div id="stamp"></div>
+  <div id="desc"></div>
+  <div id="info"></div>
+  <div id="legend"></div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
