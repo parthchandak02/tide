@@ -450,6 +450,7 @@ let lastFetchTime = Date.now();
 let infoHideTimer: ReturnType<typeof setTimeout> | null = null;
 const cueStart = performance.now();
 let labelAccumulator = 0;
+let lastElapsed = 0;
 
 const waterColor = lerpColor(FALLBACK.sst);
 const glowColor = new THREE.Color(PALETTE.glow);
@@ -512,6 +513,7 @@ for (let i = 0; i < C.annotationGrid; i++) {
     const el = document.createElement('div');
     el.className = 'annotation';
     el.textContent = '0.0m';
+    el.style.display = 'none'; // hidden until the first updateAnnotations() positions it
     document.body.appendChild(el);
     const gx = -half + i * gridStep;
     const gz = -half + j * gridStep;
@@ -675,7 +677,10 @@ function animate(): void {
   const secondsAgo = Math.floor((Date.now() - lastFetchTime) / 1000);
   updateStamp(isLive, secondsAgo);
 
-  labelAccumulator += clock.getDelta();
+  // getElapsedTime() already advances the clock, so getDelta() here would be ~0;
+  // derive the frame delta from elapsed instead.
+  labelAccumulator += elapsed - lastElapsed;
+  lastElapsed = elapsed;
   if (labelAccumulator >= C.labelUpdateInterval) {
     labelAccumulator = 0;
     updateAnnotations(
